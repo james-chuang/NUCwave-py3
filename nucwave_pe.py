@@ -76,7 +76,8 @@ def denoising (signal) :
   level = 5
   coeffs = pywt.wavedec(signal, 'bior3.1',level=level)
   for i in range(1,level+1) : 
-    coeffs[i] = [0]*len(coeffs[i])
+    #coeffs[i] = [0]*len(coeffs[i])
+    coeffs[i] = np.zeros_like(coeffs[i])
   signal_wave = pywt.waverec(coeffs, 'bior3.1')
   ls = len(signal)
   lsw = len(signal_wave)
@@ -114,7 +115,7 @@ WIG_file = '%s/%s' % (OUTdir, exper)
 
 minsize = 40
 maxsize = 200
-extension = minsize/2
+extension = minsize//2
 
 # 
 time0 = int(time.time())
@@ -149,7 +150,7 @@ nfragmentos=0
 nfragmentos_filtrados=0
 for linea1 in F :
   strand1, chrid1, coord1, seq1 = linea1.strip('\n').split('\t')
-  linea2 = F.next()
+  linea2 = next(F)
   strand2, chrid2, coord2, seq2 = linea2.strip('\n').split('\t')
   coord1 = int(coord1)
   coord2 = int(coord2)
@@ -157,7 +158,7 @@ for linea1 in F :
 
   iniPE = coord1
   finPE = coord2 + len(seq2) - 1
-  cenPE = (iniPE+finPE)/2
+  cenPE = (iniPE+finPE)//2
 
   d2d_long = finPE - iniPE + 1
   if d2d_long < maxsize and d2d_long > minsize:     

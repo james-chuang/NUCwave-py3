@@ -83,7 +83,7 @@ def denoising (signal) :
   level = 5
   coeffs = pywt.wavedec(signal, 'bior3.1',level=level)
   for i in range(1,level+1) : 
-    coeffs[i] = [0]*len(coeffs[i])
+    coeffs[i] = np.zeros_like(coeffs[i])
   signal_wave = pywt.waverec(coeffs, 'bior3.1')
   ls = len(signal)
   lsw = len(signal_wave)
